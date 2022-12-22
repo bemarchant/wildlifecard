@@ -3,7 +3,10 @@ import { Ionicons } from "@expo/vector-icons";
 
 const ScreenHeaderButton = ({ name, color, onPress }) => {
   return (
-    <Pressable onPress={onPress}>
+    <Pressable
+      onPress={onPress}
+      style={[styles.button, ({ pressed }) => pressed && styles.pressed]}
+    >
       <Ionicons name={name} color={color} size={28} />
     </Pressable>
   );
@@ -14,5 +17,9 @@ export default ScreenHeaderButton;
 const styles = StyleSheet.create({
   pressed: {
     opacity: 0.7,
+  },
+
+  button: {
+    marginLeft: 12,
   },
 });
