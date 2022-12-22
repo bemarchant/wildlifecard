@@ -16,7 +16,7 @@ const windowHeight = Dimensions.get("window").height;
 export const WildLifeCard = ({ navigation }) => {
   const viewRef = useRef();
 
-  const shareDummyImage = async () => {
+  const shareWildLifeCard = async () => {
     try {
       const uri = await captureRef(viewRef, {
         format: "png",
@@ -35,7 +35,7 @@ export const WildLifeCard = ({ navigation }) => {
           <ScreenHeaderButton
             name="share-outline"
             color="white"
-            onPress={shareDummyImage}
+            onPress={shareWildLifeCard}
           />
         );
       },
