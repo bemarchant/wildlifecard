@@ -20,12 +20,27 @@ const windowHeight = Dimensions.get("window").height;
 
 export const WildLifeCard = ({ navigation }) => {
   const imageScale = useSharedValue(1);
-  const styleAnimated = useAnimatedStyle(() => ({
-    transform: [{ scale: imageScale.value }],
-  }));
+  const imagePosX = useSharedValue(0);
+  const imagePosY = useSharedValue(0);
+
   const pinchImage = Gesture.Pinch().onUpdate((gesture) => {
     imageScale.value = gesture.scale;
   });
+
+  const panImage = Gesture.Pan().onUpdate((gesture) => {
+    imagePosX.value = gesture.translationX;
+    imagePosY.value = gesture.translationY;
+  });
+
+  const styleAnimated = useAnimatedStyle(() => ({
+    transform: [
+      { scale: imageScale.value },
+      { translateX: imagePosX.value },
+      { translateY: imagePosY.value },
+    ],
+  }));
+
+  const composed = Gesture.Simultaneous(pinchImage, panImage);
 
   const viewRef = useRef();
 
@@ -40,6 +55,7 @@ export const WildLifeCard = ({ navigation }) => {
       console.error(err);
     }
   };
+
   const editWildLifeCard = () => {
     return;
   };
@@ -83,30 +99,30 @@ export const WildLifeCard = ({ navigation }) => {
     let communName = getObservationCommonName(observation);
     let cientificName = getObservationCientificName(observation);
     let image_uri = getPhotoImageUri(observation);
+    let widthPhoto = observation["photos"][0]["original_dimensions"]["width"];
+    let heightPhoto = observation["photos"][0]["original_dimensions"]["height"];
 
     return (
-      <View style={styles.rootView} ref={viewRef}>
-        <View style={styles.rootView}>
-          <View style={styles.imageContainer}>
-            <GestureDetector gesture={pinchImage}>
-              <Animated.Image
-                style={styleAnimated}
-                source={{
-                  uri: image_uri,
-                  width: windowWidth,
-                  height: windowHeight,
-                }}
-              />
-            </GestureDetector>
+      <View style={styles.rootView}>
+        <View style={styles.imageContainer} ref={viewRef}>
+          <GestureDetector gesture={composed}>
+            <Animated.Image
+              style={styleAnimated}
+              source={{
+                uri: image_uri,
+                width: widthPhoto,
+                height: heightPhoto,
+              }}
+            />
+          </GestureDetector>
 
-            <View style={[styles.infoContainer]}>
-              <CommonNameText>{communName}</CommonNameText>
-              <CientificNameText>{cientificName}</CientificNameText>
-              <ConservationStatusBar consevationStatus={""} height={12} />
-              <Text style={styles.infoText}>{climbingZone}</Text>
-              <Text style={styles.infoText}>{userName}</Text>
-              <Text style={styles.infoText}>{date}</Text>
-            </View>
+          <View style={[styles.infoContainer]}>
+            <CommonNameText>{communName}</CommonNameText>
+            <CientificNameText>{cientificName}</CientificNameText>
+            <ConservationStatusBar consevationStatus={""} height={12} />
+            <Text style={styles.infoText}>{climbingZone}</Text>
+            <Text style={styles.infoText}>{userName}</Text>
+            <Text style={styles.infoText}>{date}</Text>
           </View>
         </View>
       </View>
@@ -117,12 +133,15 @@ export const WildLifeCard = ({ navigation }) => {
 const styles = StyleSheet.create({
   rootView: {
     flex: 1,
-  },
-  imageContainer: {
     justifyContent: "center",
     alignItems: "center",
+  },
+  imageContainer: {
+    backgroundColor: "red",
     overflow: "hidden",
     borderRadius: 20,
+    height: "90%",
+    width: "90%",
   },
 
   infoText: {
@@ -135,7 +154,7 @@ const styles = StyleSheet.create({
   infoContainer: {
     //backgroundColor: "green",
     position: "absolute",
-    bottom: windowWidth * 0.1,
+    bottom: windowWidth * 0.06,
     left: windowHeight * 0.02,
   },
 
@@ -150,10 +169,9 @@ const getPhotoImageUri = (observation) => {
   const photoFileFormat = getPhotoFileFormat(observation["photos"][0]["url"]);
   const baseUrl = getPhotoBaseUrl(observation["photos"][0]["url"]);
   const image_uri = baseUrl + photo_id + "/original." + photoFileFormat;
-
+  console.log(observation["photos"][0]["original_dimensions"]["height"]);
   return image_uri;
 };
-
 const getPhotoBaseUrl = (urlPhoto) => {
   return urlPhoto.split("/photos/")[0] + "/photos/";
 };
@@ -161,7 +179,6 @@ const getPhotoFileFormat = (urlPhoto) => {
   const len = urlPhoto.split(".").length;
   return urlPhoto.split(".")[len - 1];
 };
-
 const getObservationDay = (observation) => {
   return observation["observed_on_details"]["day"] ?? "??";
 };
@@ -171,11 +188,9 @@ const getObservationMonth = (observation) => {
 const getObservationYear = (observation) => {
   return observation["observed_on_details"]["year"] ?? "????";
 };
-
 const getObservationUserName = (observation) => {
   return observation["user"]["name"] ?? "Usuario desconocido";
 };
-
 const getObservationCommonName = (observation) => {
   return observation["taxon"]["preferred_common_name"] ?? "Sin nombre común";
 };
