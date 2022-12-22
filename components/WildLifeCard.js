@@ -1,5 +1,13 @@
-import { useRef, useLayoutEffect } from "react";
-import { Share, Text, Image, Dimensions, View, StyleSheet } from "react-native";
+import { useState, useRef, useLayoutEffect } from "react";
+import {
+  Share,
+  Text,
+  Image,
+  Dimensions,
+  View,
+  StyleSheet,
+  TextInput,
+} from "react-native";
 import { captureRef } from "react-native-view-shot";
 import { Gesture, GestureDetector } from "react-native-gesture-handler";
 import Animated, {
@@ -17,70 +25,11 @@ import { WILD_LIFE_DATA } from "../utils/constants";
 
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
+const windowRatio = windowWidth / windowHeight;
+let widthPhoto = Dimensions.get("window").width;
+let heightPhoto = Dimensions.get("window").height;
 
 export const WildLifeCard = ({ navigation }) => {
-  const imageScale = useSharedValue(1);
-  const imagePosX = useSharedValue(0);
-  const imagePosY = useSharedValue(0);
-
-  const pinchImage = Gesture.Pinch().onUpdate((gesture) => {
-    imageScale.value = gesture.scale;
-  });
-
-  const panImage = Gesture.Pan().onUpdate((gesture) => {
-    imagePosX.value = gesture.translationX;
-    imagePosY.value = gesture.translationY;
-  });
-
-  const styleAnimated = useAnimatedStyle(() => ({
-    transform: [
-      { scale: imageScale.value },
-      { translateX: imagePosX.value },
-      { translateY: imagePosY.value },
-    ],
-  }));
-
-  const composed = Gesture.Simultaneous(pinchImage, panImage);
-
-  const viewRef = useRef();
-
-  const shareWildLifeCard = async () => {
-    try {
-      const uri = await captureRef(viewRef, {
-        format: "png",
-        quality: 1,
-      });
-      await Share.share({ url: uri });
-    } catch (err) {
-      console.error(err);
-    }
-  };
-
-  const editWildLifeCard = () => {
-    return;
-  };
-
-  useLayoutEffect(() => {
-    navigation.setOptions({
-      headerRight: () => {
-        return (
-          <View style={styles.headerIconsContainer}>
-            <ScreenHeaderButton
-              name="brush-outline"
-              color="white"
-              onPress={editWildLifeCard}
-            />
-            <ScreenHeaderButton
-              name="share-outline"
-              color="white"
-              onPress={shareWildLifeCard}
-            />
-          </View>
-        );
-      },
-    });
-  });
-
   let query1 = downLoadWildLifeData(CLIMBING_ZONE.elmanzano, KINGDOM.animalia);
 
   if (query1.isLoading) {
@@ -88,7 +37,85 @@ export const WildLifeCard = ({ navigation }) => {
   } else {
     const observation = WILD_LIFE_DATA.find((w) => w["taxaId"] === 1)["data"][
       "observations"
-    ]["results"][12];
+    ]["results"][1];
+    widthPhoto = observation["photos"][0]["original_dimensions"]["width"];
+    heightPhoto = observation["photos"][0]["original_dimensions"]["height"];
+    console.log("widthPhoto : ", widthPhoto);
+    console.log("heightPhoto : ", heightPhoto);
+    console.log("windowRatio : ", windowRatio);
+    const imageScale = useSharedValue(1);
+    const imagePosX = useSharedValue(0);
+    const imagePosY = useSharedValue(0);
+    const centerPinchX = useSharedValue(0);
+    const centerPinchY = useSharedValue(0);
+
+    const imageCenter = {
+      x: widthPhoto / 2,
+      y: heightPhoto / 2,
+    };
+    const pinchImage = Gesture.Pinch().onUpdate((gesture) => {
+      imageScale.value = gesture.scale;
+    });
+
+    const panImage = Gesture.Pan().onUpdate((gesture) => {
+      imagePosX.value = gesture.translationX;
+      imagePosY.value = gesture.translationY;
+    });
+
+    const styleAnimated = useAnimatedStyle(() => ({
+      transform: [
+        { translateX: imagePosX.value + centerPinchX.value - imageCenter.x },
+        { translateY: imagePosY.value + centerPinchY.value - imageCenter.y },
+        { scale: imageScale.value },
+        { translateX: imagePosX.value - centerPinchX.value + imageCenter.x },
+        { translateY: imagePosY.value - centerPinchY.value + imageCenter.y },
+      ],
+    }));
+
+    const composed = Gesture.Simultaneous(pinchImage, panImage);
+
+    const viewRef = useRef();
+
+    const textInputHandler = () => {
+      return;
+    };
+
+    const shareWildLifeCard = async () => {
+      try {
+        const uri = await captureRef(viewRef, {
+          format: "png",
+          quality: 1,
+        });
+        await Share.share({ url: uri });
+      } catch (err) {
+        console.error(err);
+      }
+    };
+
+    const editWildLifeCard = () => {
+      return;
+    };
+
+    useLayoutEffect(() => {
+      navigation.setOptions({
+        headerRight: () => {
+          return (
+            <View style={styles.headerIconsContainer}>
+              <ScreenHeaderButton
+                name="brush-outline"
+                color="white"
+                onPress={editWildLifeCard}
+              />
+              <ScreenHeaderButton
+                name="share-outline"
+                color="white"
+                onPress={shareWildLifeCard}
+              />
+            </View>
+          );
+        },
+      });
+    });
 
     let day = getObservationDay(observation);
     let month = getObservationMonth(observation);
@@ -96,12 +123,12 @@ export const WildLifeCard = ({ navigation }) => {
     let date = day + "/" + month + "/" + year;
     let userName = getObservationUserName(observation);
     let climbingZone = "El Manzano" ?? "Desconocido";
-    let communName = getObservationCommonName(observation);
     let cientificName = getObservationCientificName(observation);
     let image_uri = getPhotoImageUri(observation);
-    let widthPhoto = observation["photos"][0]["original_dimensions"]["width"];
-    let heightPhoto = observation["photos"][0]["original_dimensions"]["height"];
 
+    const [commonName, setCommonName] = useState(
+      getObservationCommonName(observation)
+    );
     return (
       <View style={styles.rootView}>
         <View style={styles.imageContainer} ref={viewRef}>
@@ -117,14 +144,24 @@ export const WildLifeCard = ({ navigation }) => {
           </GestureDetector>
 
           <View style={[styles.infoContainer]}>
-            <CommonNameText>{communName}</CommonNameText>
+            <CommonNameText>{commonName}</CommonNameText>
             <CientificNameText>{cientificName}</CientificNameText>
-            <ConservationStatusBar consevationStatus={""} height={12} />
+            <ConservationStatusBar
+              consevationStatus={""}
+              height={18}
+              width={140}
+            />
             <Text style={styles.infoText}>{climbingZone}</Text>
             <Text style={styles.infoText}>{userName}</Text>
             <Text style={styles.infoText}>{date}</Text>
           </View>
         </View>
+
+        <TextInput
+          onChangeText={setCommonName}
+          style={styles.textInput}
+          value={commonName}
+        />
       </View>
     );
   }
@@ -133,22 +170,23 @@ export const WildLifeCard = ({ navigation }) => {
 const styles = StyleSheet.create({
   rootView: {
     flex: 1,
-    justifyContent: "center",
     alignItems: "center",
+    backgroundColor: "#454545ff",
   },
   imageContainer: {
+    top: 10,
     backgroundColor: "red",
     overflow: "hidden",
     borderRadius: 20,
-    height: "90%",
-    width: "90%",
+    height: windowWidth * 16 * 0.1,
+    width: windowWidth * 9 * 0.1,
   },
 
   infoText: {
     color: "white",
     fontSize: 14,
     fontWeight: "bold",
-    padding: 3,
+    paddingVertical: 3,
   },
 
   infoContainer: {
@@ -162,6 +200,10 @@ const styles = StyleSheet.create({
     padding: 0,
     flexDirection: "row",
   },
+
+  textInput: {
+    flex: 1,
+  },
 });
 
 const getPhotoImageUri = (observation) => {
@@ -169,7 +211,6 @@ const getPhotoImageUri = (observation) => {
   const photoFileFormat = getPhotoFileFormat(observation["photos"][0]["url"]);
   const baseUrl = getPhotoBaseUrl(observation["photos"][0]["url"]);
   const image_uri = baseUrl + photo_id + "/original." + photoFileFormat;
-  console.log(observation["photos"][0]["original_dimensions"]["height"]);
   return image_uri;
 };
 const getPhotoBaseUrl = (urlPhoto) => {

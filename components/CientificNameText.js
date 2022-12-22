@@ -14,7 +14,7 @@ export default CientificNameText;
 
 const styles = StyleSheet.create({
   cientificNameText: {
-    paddingBottom: 1,
+    paddingVertical: 1,
     color: "white",
     fontSize: 16,
     fontWeight: "normal",
