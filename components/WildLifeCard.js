@@ -1,15 +1,48 @@
+import { useRef, useLayoutEffect } from "react";
 import { Text, Image, Dimensions, View, StyleSheet } from "react-native";
+import ScreenHeaderButton from "./icons/ScreenHeaderButton";
 import ConservationStatusBar from "./svg/ConservationStatusBar";
 import CientificNameText from "./CientificNameText";
 import CommonNameText from "./CommonNameText";
 import { CLIMBING_ZONE, KINGDOM } from "../utils/constants";
 import { downLoadWildLifeData } from "../utils/inat";
 import { WILD_LIFE_DATA } from "../utils/constants";
+import { captureRef } from "react-native-view-shot";
+import { Share } from "react-native";
 
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
 
-export const WildLifeCard = () => {
+const saveToCameraRoll = () => {
+  return;
+};
+export const WildLifeCard = ({ navigation }) => {
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerRight: () => {
+        return (
+          <ScreenHeaderButton
+            name="arrow-down-circle-outline"
+            color="white"
+            onPress={saveToCameraRoll}
+          />
+        );
+      },
+    });
+  });
+  //   const viewRef = useRef();
+  //   const shareDummyImage = async () => {
+  //     try {
+  //       const uri = await captureRef(viewRef, {
+  //         format: "png",
+  //         quality: 0.7,
+  //       });
+  //       await Share.open({ url: uri });
+  //     } catch (err) {
+  //       console.error(err);
+  //     }
+  //   };
+
   let query1 = downLoadWildLifeData(CLIMBING_ZONE.elmanzano, KINGDOM.animalia);
 
   if (query1.isLoading) {
@@ -17,7 +50,7 @@ export const WildLifeCard = () => {
   } else {
     const observation = WILD_LIFE_DATA.find((w) => w["taxaId"] === 1)["data"][
       "observations"
-    ]["results"][19];
+    ]["results"][26];
 
     let day = getObservationDay(observation);
     let month = getObservationMonth(observation);
@@ -30,6 +63,7 @@ export const WildLifeCard = () => {
     let image_uri = getPhotoImageUri(observation);
 
     return (
+      //   <View style={styles.rootView} ref={viewRef}>
       <View style={styles.rootView}>
         <View style={styles.imageContainer}>
           <Image
@@ -62,8 +96,9 @@ const styles = StyleSheet.create({
   },
   imageContainer: {
     justifyContent: "center",
+    alignItems: "center",
     overflow: "hidden",
-    borderRadius: 10,
+    borderRadius: 20,
   },
 
   infoText: {
