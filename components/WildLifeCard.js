@@ -27,16 +27,26 @@ export const WildLifeCard = ({ navigation }) => {
       console.error(err);
     }
   };
+  const editWildLifeCard = () => {
+    return;
+  };
 
   useLayoutEffect(() => {
     navigation.setOptions({
       headerRight: () => {
         return (
-          <ScreenHeaderButton
-            name="share-outline"
-            color="white"
-            onPress={shareWildLifeCard}
-          />
+          <View style={styles.headerIconsContainer}>
+            <ScreenHeaderButton
+              name="brush-outline"
+              color="white"
+              onPress={editWildLifeCard}
+            />
+            <ScreenHeaderButton
+              name="share-outline"
+              color="white"
+              onPress={shareWildLifeCard}
+            />
+          </View>
         );
       },
     });
@@ -113,6 +123,11 @@ const styles = StyleSheet.create({
     position: "absolute",
     bottom: windowWidth * 0.1,
     left: windowHeight * 0.02,
+  },
+
+  headerIconsContainer: {
+    padding: 0,
+    flexDirection: "row",
   },
 });
 
