@@ -1,6 +1,11 @@
 import { useRef, useLayoutEffect } from "react";
 import { Share, Text, Image, Dimensions, View, StyleSheet } from "react-native";
 import { captureRef } from "react-native-view-shot";
+import { Gesture, GestureDetector } from "react-native-gesture-handler";
+import Animated, {
+  useSharedValue,
+  useAnimatedStyle,
+} from "react-native-reanimated";
 
 import ScreenHeaderButton from "./icons/ScreenHeaderButton";
 import ConservationStatusBar from "./svg/ConservationStatusBar";
@@ -14,6 +19,14 @@ const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
 
 export const WildLifeCard = ({ navigation }) => {
+  const imageScale = useSharedValue(1);
+  const styleAnimated = useAnimatedStyle(() => ({
+    transform: [{ scale: imageScale.value }],
+  }));
+  const pinchImage = Gesture.Pinch().onUpdate((gesture) => {
+    imageScale.value = gesture.scale;
+  });
+
   const viewRef = useRef();
 
   const shareWildLifeCard = async () => {
@@ -59,7 +72,7 @@ export const WildLifeCard = ({ navigation }) => {
   } else {
     const observation = WILD_LIFE_DATA.find((w) => w["taxaId"] === 1)["data"][
       "observations"
-    ]["results"][26];
+    ]["results"][12];
 
     let day = getObservationDay(observation);
     let month = getObservationMonth(observation);
@@ -75,16 +88,17 @@ export const WildLifeCard = ({ navigation }) => {
       <View style={styles.rootView} ref={viewRef}>
         <View style={styles.rootView}>
           <View style={styles.imageContainer}>
-            <Image
-              style={{
-                borderRadius: 20,
-              }}
-              source={{
-                uri: image_uri,
-                width: windowWidth,
-                height: windowHeight,
-              }}
-            ></Image>
+            <GestureDetector gesture={pinchImage}>
+              <Animated.Image
+                style={styleAnimated}
+                source={{
+                  uri: image_uri,
+                  width: windowWidth,
+                  height: windowHeight,
+                }}
+              />
+            </GestureDetector>
+
             <View style={[styles.infoContainer]}>
               <CommonNameText>{communName}</CommonNameText>
               <CientificNameText>{cientificName}</CientificNameText>
