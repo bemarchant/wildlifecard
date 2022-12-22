@@ -7,7 +7,6 @@ const queryClient = new QueryClient();
 const Stack = createNativeStackNavigator();
 
 export default function App() {
-  console.log("App");
   return (
     <QueryClientProvider client={queryClient}>
       <NavigationContainer>
