@@ -2,14 +2,13 @@ import { useState } from "react";
 import { runOnJS } from "react-native-reanimated";
 import { Gesture, GestureDetector } from "react-native-gesture-handler";
 import { Platform, Dimensions, Text, View, StyleSheet } from "react-native";
-import {
-  CientificName,
-  CommonName,
-  ConservationStatusBar,
-  ClimbingZoneText,
-  DateObservation,
-  UserName,
-} from "./";
+import { CientificName } from "./CientificName";
+import { CommonName } from "./CommonName";
+import { ConservationStatusBar } from "./ConservationStatusBar";
+import { ClimbingZoneText } from "./ClimbingZoneText";
+import { UserName } from "./UserName";
+import { DateObservation } from "./DateObservation";
+
 let windowWidth = Dimensions.get("window").width;
 let windowHeight = Dimensions.get("window").height;
 
