@@ -152,7 +152,12 @@ export const WildLifeCard = ({ navigation }) => {
                 <CommonNameText>{commonName}</CommonNameText>
 
                 <CientificNameText>{cientificName}</CientificNameText>
-                <ConservationStatusBar circlePosX={circlePosX} />
+                <View style={styles.statusBar}>
+                  <ConservationStatusBar
+                    style={styles.statusBar}
+                    circlePosX={circlePosX}
+                  />
+                </View>
                 <Text style={styles.infoText}>{climbingZone}</Text>
                 <Text style={styles.infoText}>{userName}</Text>
                 <Text style={styles.infoText}>{date}</Text>
@@ -178,6 +183,9 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     height: windowWidth * 16 * 0.1,
     width: windowWidth * 9 * 0.1,
+  },
+  statusBar: {
+    marginLeft: -10,
   },
 
   infoText: {
