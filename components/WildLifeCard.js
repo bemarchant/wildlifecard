@@ -39,7 +39,7 @@ export const WildLifeCard = ({ navigation }) => {
   } else {
     const observation = WILD_LIFE_DATA.find((w) => w["taxaId"] === 1)["data"][
       "observations"
-    ]["results"][1];
+    ]["results"][10];
     widthPhoto = observation["photos"][0]["original_dimensions"]["width"];
     heightPhoto = observation["photos"][0]["original_dimensions"]["height"];
 
@@ -180,7 +180,7 @@ const styles = StyleSheet.create({
     top: 10,
     backgroundColor: "red",
     overflow: "hidden",
-    borderRadius: 20,
+    borderRadius: 5,
     height: windowWidth * 16 * 0.1,
     width: windowWidth * 9 * 0.1,
   },
