@@ -29,15 +29,15 @@ export const CLIMBING_ZONE = {
 };
 
 export const CONSERVATION_STATUS = {
-  DD: {
-    id: "DD",
+  NE: {
+    id: "NE",
     name: "No evaluado",
     color: "#ffffff",
     borderColor: "#010007",
   },
 
-  NE: {
-    id: "NE",
+  DD: {
+    id: "DD",
     name: "Insuficiencia de datos",
     color: "#9c9f9d",
     borderColor: "#010007",
@@ -86,9 +86,21 @@ export const CONSERVATION_STATUS = {
   },
 
   EX: {
-    id: "EW",
+    id: "EX",
     name: "Extinto",
     color: "#010007",
     borderColor: "#e10613ff",
   },
 };
+
+export const CONSERVATION_STATUS_LIST = [
+  CONSERVATION_STATUS["DD"],
+  CONSERVATION_STATUS["NE"],
+  CONSERVATION_STATUS["LC"],
+  CONSERVATION_STATUS["NT"],
+  CONSERVATION_STATUS["VU"],
+  CONSERVATION_STATUS["EN"],
+  CONSERVATION_STATUS["CR"],
+  CONSERVATION_STATUS["EW"],
+  CONSERVATION_STATUS["EX"],
+];

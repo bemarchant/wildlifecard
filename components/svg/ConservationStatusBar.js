@@ -7,71 +7,49 @@ import Svg, {
   Stop,
   Path,
   Text,
-  TSpan,
 } from "react-native-svg";
+import { CONSERVATION_STATUS_LIST } from "../../utils/constants";
 
-let circleFillColor = "";
 let circleX = 0;
-let statusText = "";
-let statusTextStrokeColor = "";
 const ratio = 0.125;
 
 const getConservationStatus = (circlePosX) => {
   if (circlePosX <= 0 * ratio * 120) {
     circleX = 0 * ratio * 120;
-    circleFillColor = "#fff";
-    statusTextStrokeColor = "#010007";
     return "NE";
   } else if (circlePosX > 0 * ratio * 120 && circlePosX <= 1 * ratio * 120) {
     circleX = 1 * ratio * 120;
-    circleFillColor = "#9c9f9d";
-    statusTextStrokeColor = "#010007";
     return "DD";
   } else if (circlePosX > 1 * ratio * 120 && circlePosX <= 2 * ratio * 120) {
     circleX = 2 * ratio * 120;
-    circleFillColor = "#087465";
-    statusTextStrokeColor = "#ffffffff";
     return "LC";
   } else if (circlePosX > 2 * ratio * 120 && circlePosX <= 3 * ratio * 120) {
     circleX = 3 * ratio * 120;
-    circleFillColor = "#087465";
-    statusTextStrokeColor = "#9bcc99ff";
     return "NT";
   } else if (circlePosX > 3 * ratio * 120 && circlePosX <= 4 * ratio * 120) {
     circleX = 4 * ratio * 120;
-    circleFillColor = "#e19b00";
-    statusTextStrokeColor = "#f7f0cdff";
-
     return "VU";
   } else if (circlePosX > 4 * ratio * 120 && circlePosX <= 5 * ratio * 120) {
     circleX = 5 * ratio * 120;
-    circleFillColor = "#eb6209";
-    statusTextStrokeColor = "#fbc79aff";
-
     return "EN";
   } else if (circlePosX > 5 * ratio * 120 && circlePosX <= 6 * ratio * 120) {
     circleX = 6 * ratio * 120;
-    circleFillColor = "#e40521";
-    statusTextStrokeColor = "#f8caceff";
-
     return "CR";
   } else if (circlePosX > 6 * ratio * 120 && circlePosX <= 7 * ratio * 120) {
     circleX = 7 * ratio * 120;
-    circleFillColor = "#1a0046";
-    statusTextStrokeColor = "#ffffffff";
-
     return "EW";
   } else if (circlePosX > 7 * ratio * 120) {
     circleX = 8 * ratio * 120;
-    circleFillColor = "#010007";
-    statusTextStrokeColor = "#e10613ff";
-
     return "EX";
   }
-  return;
+  return "NE";
 };
+
 function ConservationStatusBar({ props, circlePosX }) {
-  statusText = getConservationStatus(circlePosX);
+  const statusText = getConservationStatus(circlePosX);
+  const conservationStatus = CONSERVATION_STATUS_LIST.find(
+    (stat) => stat.id === statusText
+  );
   return (
     <Svg
       width="160mm"
@@ -189,7 +167,7 @@ function ConservationStatusBar({ props, circlePosX }) {
         r={8}
         cy={4}
         cx={circleX}
-        fill={circleFillColor}
+        fill={conservationStatus.color}
         fillOpacity={1}
         stroke="#454545"
         strokeWidth={2}
@@ -200,7 +178,7 @@ function ConservationStatusBar({ props, circlePosX }) {
       />
 
       <Text
-        stroke={statusTextStrokeColor}
+        stroke={conservationStatus.borderColor}
         fontSize="6"
         x={circleX}
         y={6}
