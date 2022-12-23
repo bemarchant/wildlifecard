@@ -106,11 +106,11 @@ export const WildLifeCard = ({ navigation }) => {
         headerRight: () => {
           return (
             <View style={styles.headerIconsContainer}>
-              <ScreenHeaderButton
+              {/* <ScreenHeaderButton
                 name="brush-outline"
                 color="white"
                 onPress={editWildLifeCard}
-              />
+              /> */}
               <ScreenHeaderButton
                 name="share-outline"
                 color="white"
@@ -178,7 +178,7 @@ const styles = StyleSheet.create({
   },
   imageContainer: {
     top: 10,
-    backgroundColor: "red",
+    backgroundColor: "#363636ff",
     overflow: "hidden",
     borderRadius: 5,
     height: windowWidth * 16 * 0.1,

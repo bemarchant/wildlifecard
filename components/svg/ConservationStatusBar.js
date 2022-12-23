@@ -72,7 +72,6 @@ const getConservationStatus = (circlePosX) => {
 };
 function ConservationStatusBar({ props, circlePosX }) {
   statusText = getConservationStatus(circlePosX);
-  console.log(statusText);
   return (
     <Svg
       width="160mm"
