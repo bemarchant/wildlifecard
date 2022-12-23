@@ -7,14 +7,17 @@ import Svg, {
   Path,
   Text,
 } from "react-native-svg";
-import { CONSERVATION_STATUS_LIST } from "../../utils/constants";
+import {
+  CONSERVATION_STATUS,
+  CONSERVATION_STATUS_LIST,
+} from "../../utils/constants";
 
 let circleX = 0;
 const ratio = 0.125;
 
 const getConservationStatus = (circlePosX) => {
   if (circlePosX <= 0 * ratio * 120) {
-    circleX = 0 * ratio * 120;
+    circleX = 0.45 * ratio * 120;
     return "NE";
   } else if (circlePosX > 0 * ratio * 120 && circlePosX <= 1 * ratio * 120) {
     circleX = 1 * ratio * 120;
@@ -51,7 +54,7 @@ export function ConservationStatusBar({ props, circlePosX }) {
   );
   return (
     <Svg
-      width="160mm"
+      width={"160mm"}
       height="20mm"
       viewBox="-10 0 160 8"
       xmlnsXlink="http://www.w3.org/1999/xlink"
@@ -68,8 +71,16 @@ export function ConservationStatusBar({ props, circlePosX }) {
           gradientUnits="userSpaceOnUse"
           gradientTransform="translate(-5.292 -356.59)"
         >
-          <Stop offset={0} stopColor="#1a0046" stopOpacity={1} />
-          <Stop offset={1} stopColor="#010007" stopOpacity={1} />
+          <Stop
+            offset={0}
+            stopColor={CONSERVATION_STATUS["EW"].color}
+            stopOpacity={1}
+          />
+          <Stop
+            offset={1}
+            stopColor={CONSERVATION_STATUS["EX"].color}
+            stopOpacity={1}
+          />
         </LinearGradient>
         <LinearGradient
           id="k"
@@ -80,8 +91,16 @@ export function ConservationStatusBar({ props, circlePosX }) {
           gradientUnits="userSpaceOnUse"
           gradientTransform="translate(-5.292 -352.682)"
         >
-          <Stop offset={0} stopColor="#e40521" stopOpacity={1} />
-          <Stop offset={1} stopColor="#1a0046" stopOpacity={1} />
+          <Stop
+            offset={0}
+            stopColor={CONSERVATION_STATUS["CR"].color}
+            stopOpacity={1}
+          />
+          <Stop
+            offset={1}
+            stopColor={CONSERVATION_STATUS["EW"].color}
+            stopOpacity={1}
+          />
         </LinearGradient>
         <LinearGradient
           id="j"
@@ -92,8 +111,16 @@ export function ConservationStatusBar({ props, circlePosX }) {
           gradientUnits="userSpaceOnUse"
           gradientTransform="translate(-5.292 -352.682)"
         >
-          <Stop offset={0} stopColor="#eb6209" stopOpacity={1} />
-          <Stop offset={1} stopColor="#e40521" stopOpacity={1} />
+          <Stop
+            offset={0}
+            stopColor={CONSERVATION_STATUS["EN"].color}
+            stopOpacity={1}
+          />
+          <Stop
+            offset={1}
+            stopColor={CONSERVATION_STATUS["CR"].color}
+            stopOpacity={1}
+          />
         </LinearGradient>
         <LinearGradient
           id="m"
@@ -104,8 +131,16 @@ export function ConservationStatusBar({ props, circlePosX }) {
           gradientUnits="userSpaceOnUse"
           gradientTransform="translate(-5.292 -352.682)"
         >
-          <Stop offset={0} stopColor="#e19b00" stopOpacity={1} />
-          <Stop offset={1} stopColor="#eb6209" stopOpacity={1} />
+          <Stop
+            offset={0}
+            stopColor={CONSERVATION_STATUS["VU"].color}
+            stopOpacity={1}
+          />
+          <Stop
+            offset={1}
+            stopColor={CONSERVATION_STATUS["EN"].color}
+            stopOpacity={1}
+          />
         </LinearGradient>
         <LinearGradient
           id="l"
@@ -116,8 +151,16 @@ export function ConservationStatusBar({ props, circlePosX }) {
           gradientUnits="userSpaceOnUse"
           gradientTransform="translate(-5.292 -352.682)"
         >
-          <Stop offset={0} stopColor="#087465" stopOpacity={1} />
-          <Stop offset={1} stopColor="#e19b00" stopOpacity={1} />
+          <Stop
+            offset={0}
+            stopColor={CONSERVATION_STATUS["NT"].color}
+            stopOpacity={1}
+          />
+          <Stop
+            offset={1}
+            stopColor={CONSERVATION_STATUS["VU"].color}
+            stopOpacity={1}
+          />
         </LinearGradient>
         <LinearGradient
           id="n"
@@ -128,8 +171,16 @@ export function ConservationStatusBar({ props, circlePosX }) {
           gradientUnits="userSpaceOnUse"
           gradientTransform="translate(-5.292 -352.682)"
         >
-          <Stop offset={0} stopColor="#9c9f9d" stopOpacity={1} />
-          <Stop offset={1} stopColor="#087465" stopOpacity={1} />
+          <Stop
+            offset={0}
+            stopColor={CONSERVATION_STATUS["DD"].color}
+            stopOpacity={1}
+          />
+          <Stop
+            offset={1}
+            stopColor={CONSERVATION_STATUS["LC"].color}
+            stopOpacity={1}
+          />
         </LinearGradient>
         <LinearGradient
           id="i"
@@ -140,8 +191,16 @@ export function ConservationStatusBar({ props, circlePosX }) {
           gradientUnits="userSpaceOnUse"
           gradientTransform="matrix(1.00005 0 0 1.00005 -5.293 -352.7)"
         >
-          <Stop offset={0} stopColor="#fff" stopOpacity={1} />
-          <Stop offset={1} stopColor="#9c9f9d" stopOpacity={1} />
+          <Stop
+            offset={0}
+            stopColor={CONSERVATION_STATUS["NE"].color}
+            stopOpacity={1}
+          />
+          <Stop
+            offset={1}
+            stopColor={CONSERVATION_STATUS["DD"].color}
+            stopOpacity={1}
+          />
         </LinearGradient>
       </Defs>
 

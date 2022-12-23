@@ -20,6 +20,7 @@ export default function App() {
           <Stack.Screen
             name="WildLifeCardEditScreen"
             component={WildLifeCardEditScreen}
+            options={{ title: "Editor" }}
           />
         </Stack.Navigator>
       </NavigationContainer>

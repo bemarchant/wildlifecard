@@ -1,11 +1,11 @@
 import { View, Text, StyleSheet } from "react-native";
-import UserIcon from "../icons/UserIcon";
+import ClimbZoneIcon from "../icons/ClimbZoneIcon";
 
-export const UserName = ({ children }) => {
+export const ClimbingZoneText = ({ children }) => {
   return (
     <View style={styles.rootView}>
       <View style={styles.iconContainer}>
-        <UserIcon />
+        <ClimbZoneIcon />
       </View>
       <Text style={styles.userNameText}>{children}</Text>
     </View>

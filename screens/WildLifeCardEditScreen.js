@@ -31,10 +31,9 @@ export const WildLifeCardEditScreen = ({ navigation }) => {
   } else {
     const observation = WILD_LIFE_DATA.find((w) => w["taxaId"] === 1)["data"][
       "observations"
-    ]["results"][1];
+    ]["results"][12];
 
     const viewRef = useRef();
-
     const shareWildLifeCard = async () => {
       try {
         const uri = await captureRef(viewRef, {
@@ -87,7 +86,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#363636ff",
     overflow: "hidden",
     borderRadius: 5,
-    height: windowWidth * 16 * 0.1,
-    width: windowWidth * 9 * 0.1,
+    height: windowWidth * 1.6,
+    width: windowWidth * 0.9,
   },
 });

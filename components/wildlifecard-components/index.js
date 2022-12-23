@@ -5,3 +5,4 @@ export { DateObservation } from "./DateObservation";
 export { UserName } from "./UserName";
 export { ObservationImage } from "./ObservationImage";
 export { ObservationInfoBox } from "./ObservationInfoBox";
+export { ClimbingZoneText } from "./ClimbingZoneText";

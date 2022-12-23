@@ -6,9 +6,11 @@ import {
   CientificName,
   CommonName,
   ConservationStatusBar,
+  ClimbingZoneText,
   DateObservation,
   UserName,
 } from "./";
+
 let windowWidth = Dimensions.get("window").width;
 let windowHeight = Dimensions.get("window").height;
 
@@ -31,7 +33,10 @@ export const ObservationInfoBox = ({ observation }) => {
   return (
     <GestureDetector gesture={panCircleStatusBar}>
       <View style={[styles.infoContainer]}>
-        <CommonName>{commonName}</CommonName>
+        <View style={styles.nameContainer}>
+          <CommonName>{commonName}</CommonName>
+          <Text style={styles.distributionText}> NAT </Text>
+        </View>
         <CientificName>{cientificName}</CientificName>
         <View style={styles.statusBar}>
           <ConservationStatusBar
@@ -39,7 +44,7 @@ export const ObservationInfoBox = ({ observation }) => {
             circlePosX={circlePosX}
           />
         </View>
-        <Text style={styles.infoText}>{climbingZone}</Text>
+        <ClimbingZoneText>{climbingZone}</ClimbingZoneText>
         <UserName>{userName}</UserName>
         <DateObservation>{date}</DateObservation>
       </View>
@@ -50,13 +55,6 @@ export const ObservationInfoBox = ({ observation }) => {
 const styles = StyleSheet.create({
   statusBar: {
     marginLeft: -10,
-  },
-
-  infoText: {
-    color: "white",
-    fontSize: 14,
-    fontWeight: "bold",
-    paddingVertical: 3,
   },
 
   infoContainer: {
@@ -73,5 +71,26 @@ const styles = StyleSheet.create({
 
   textInput: {
     flex: 1,
+  },
+
+  nameContainer: {
+    flex: 1,
+    flexDirection: "row",
+    //backgroundColor: "green",
+  },
+
+  distributionText: {
+    borderColor: "#ffffff",
+    borderRadius: 4,
+    borderWidth: 1,
+    height: 12,
+    width: 26,
+    backgroundColor: "orange",
+    paddingHorizontal: 1,
+    fontSize: 8,
+    color: "white",
+    fontWeight: "bold",
+    overflow: "hidden",
+    marginTop: 4,
   },
 });

@@ -16,7 +16,8 @@ export default ScreenHeaderButton;
 
 const styles = StyleSheet.create({
   pressed: {
-    opacity: 0.7,
+    opacity: 0.4,
+    color: "red",
   },
 
   button: {
