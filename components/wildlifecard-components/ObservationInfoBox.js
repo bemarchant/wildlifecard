@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { runOnJS } from "react-native-reanimated";
 import { Gesture, GestureDetector } from "react-native-gesture-handler";
-import { Dimensions, Text, View, StyleSheet } from "react-native";
+import { Platform, Dimensions, Text, View, StyleSheet } from "react-native";
 import {
   CientificName,
   CommonName,
@@ -10,7 +10,6 @@ import {
   DateObservation,
   UserName,
 } from "./";
-
 let windowWidth = Dimensions.get("window").width;
 let windowHeight = Dimensions.get("window").height;
 
@@ -35,8 +34,11 @@ export const ObservationInfoBox = ({ observation }) => {
       <View style={[styles.infoContainer]}>
         <View style={styles.nameContainer}>
           <CommonName>{commonName}</CommonName>
-          <Text style={styles.distributionText}> NAT </Text>
+          <View style={styles.distributionContainer}>
+            <Text style={styles.distributionText}> NAT </Text>
+          </View>
         </View>
+
         <CientificName>{cientificName}</CientificName>
         <View style={styles.statusBar}>
           <ConservationStatusBar
@@ -78,11 +80,19 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     //backgroundColor: "green",
   },
+  distributionContainer: {
+    elevation: 4,
+    shadowColor: "black",
+    shadowOpacity: 0.4,
+    shadowOffset: { width: 2, height: 2 },
+    shadowRadius: 4,
+    overflow: Platform.OS === "android" ? "hidden" : "visible",
+  },
 
   distributionText: {
     borderColor: "#ffffff",
-    borderRadius: 4,
     borderWidth: 1,
+    borderRadius: 5,
     height: 12,
     width: 26,
     backgroundColor: "orange",
@@ -91,6 +101,5 @@ const styles = StyleSheet.create({
     color: "white",
     fontWeight: "bold",
     overflow: "hidden",
-    marginTop: 4,
   },
 });
