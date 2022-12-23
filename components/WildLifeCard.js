@@ -15,13 +15,14 @@ import Animated, {
   runOnJS,
   useSharedValue,
   useAnimatedStyle,
-  useDerivedValue,
 } from "react-native-reanimated";
 
 import ScreenHeaderButton from "./icons/ScreenHeaderButton";
 import ConservationStatusBar from "./svg/ConservationStatusBar";
 import CientificNameText from "./CientificNameText";
 import CommonNameText from "./CommonNameText";
+import UserNameText from "./UserNameText";
+import DateObservationText from "./DateObservationText";
 import { CLIMBING_ZONE, KINGDOM } from "../utils/constants";
 import { downLoadWildLifeData } from "../utils/inat";
 import { WILD_LIFE_DATA } from "../utils/constants";
@@ -39,7 +40,7 @@ export const WildLifeCard = ({ navigation }) => {
   } else {
     const observation = WILD_LIFE_DATA.find((w) => w["taxaId"] === 1)["data"][
       "observations"
-    ]["results"][10];
+    ]["results"][17];
     widthPhoto = observation["photos"][0]["original_dimensions"]["width"];
     heightPhoto = observation["photos"][0]["original_dimensions"]["height"];
 
@@ -150,7 +151,6 @@ export const WildLifeCard = ({ navigation }) => {
             <GestureDetector gesture={panCircleStatusBar}>
               <View style={[styles.infoContainer]}>
                 <CommonNameText>{commonName}</CommonNameText>
-
                 <CientificNameText>{cientificName}</CientificNameText>
                 <View style={styles.statusBar}>
                   <ConservationStatusBar
@@ -159,8 +159,8 @@ export const WildLifeCard = ({ navigation }) => {
                   />
                 </View>
                 <Text style={styles.infoText}>{climbingZone}</Text>
-                <Text style={styles.infoText}>{userName}</Text>
-                <Text style={styles.infoText}>{date}</Text>
+                <UserNameText>{userName}</UserNameText>
+                <DateObservationText>{date}</DateObservationText>
               </View>
             </GestureDetector>
           </View>
