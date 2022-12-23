@@ -1,4 +1,3 @@
-import { useState } from "react";
 import * as React from "react";
 import Svg, {
   Defs,
@@ -45,7 +44,7 @@ const getConservationStatus = (circlePosX) => {
   return "NE";
 };
 
-function ConservationStatusBar({ props, circlePosX }) {
+export function ConservationStatusBar({ props, circlePosX }) {
   const statusText = getConservationStatus(circlePosX);
   const conservationStatus = CONSERVATION_STATUS_LIST.find(
     (stat) => stat.id === statusText
@@ -189,5 +188,3 @@ function ConservationStatusBar({ props, circlePosX }) {
     </Svg>
   );
 }
-
-export default ConservationStatusBar;

@@ -1,7 +1,7 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { WildLifeCard } from "./components/WildLifeCard";
+import { WildLifeCardEditScreen } from "./screens/WildLifeCardEditScreen";
 const queryClient = new QueryClient();
 
 const Stack = createNativeStackNavigator();
@@ -17,7 +17,10 @@ export default function App() {
             contentStyle: { backgroundColor: "black" },
           }}
         >
-          <Stack.Screen name="WildLifeCard" component={WildLifeCard} />
+          <Stack.Screen
+            name="WildLifeCardEditScreen"
+            component={WildLifeCardEditScreen}
+          />
         </Stack.Navigator>
       </NavigationContainer>
     </QueryClientProvider>

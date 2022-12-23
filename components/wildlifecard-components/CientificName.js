@@ -1,6 +1,6 @@
 import { Text, StyleSheet } from "react-native";
 
-const CientificNameText = ({ children }) => {
+export const CientificName = ({ children }) => {
   return (
     <Text style={styles.cientificNameText}>
       {"("}
@@ -9,8 +9,6 @@ const CientificNameText = ({ children }) => {
     </Text>
   );
 };
-
-export default CientificNameText;
 
 const styles = StyleSheet.create({
   cientificNameText: {
