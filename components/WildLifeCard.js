@@ -1,18 +1,21 @@
-import { useState, useRef, useLayoutEffect } from "react";
+import { useRef, useLayoutEffect, useState } from "react";
 import {
   Share,
   Text,
-  Image,
   Dimensions,
   View,
   StyleSheet,
-  TextInput,
+  TouchableWithoutFeedback,
+  Keyboard,
+  KeyboardAvoidingView,
 } from "react-native";
 import { captureRef } from "react-native-view-shot";
 import { Gesture, GestureDetector } from "react-native-gesture-handler";
 import Animated, {
+  runOnJS,
   useSharedValue,
   useAnimatedStyle,
+  useDerivedValue,
 } from "react-native-reanimated";
 
 import ScreenHeaderButton from "./icons/ScreenHeaderButton";
@@ -25,7 +28,6 @@ import { WILD_LIFE_DATA } from "../utils/constants";
 
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
-const windowRatio = windowWidth / windowHeight;
 let widthPhoto = Dimensions.get("window").width;
 let heightPhoto = Dimensions.get("window").height;
 
@@ -40,9 +42,7 @@ export const WildLifeCard = ({ navigation }) => {
     ]["results"][1];
     widthPhoto = observation["photos"][0]["original_dimensions"]["width"];
     heightPhoto = observation["photos"][0]["original_dimensions"]["height"];
-    console.log("widthPhoto : ", widthPhoto);
-    console.log("heightPhoto : ", heightPhoto);
-    console.log("windowRatio : ", windowRatio);
+
     const imageScale = useSharedValue(1);
     const imagePosX = useSharedValue(0);
     const imagePosY = useSharedValue(0);
@@ -60,6 +60,11 @@ export const WildLifeCard = ({ navigation }) => {
     const panImage = Gesture.Pan().onUpdate((gesture) => {
       imagePosX.value = gesture.translationX;
       imagePosY.value = gesture.translationY;
+    });
+
+    const [circlePosX, setCirclePosX] = useState(0);
+    const panCircleStatusBar = Gesture.Pan().onUpdate((gesture) => {
+      runOnJS(setCirclePosX)(gesture.translationX);
     });
 
     const styleAnimated = useAnimatedStyle(() => ({
@@ -125,44 +130,37 @@ export const WildLifeCard = ({ navigation }) => {
     let climbingZone = "El Manzano" ?? "Desconocido";
     let cientificName = getObservationCientificName(observation);
     let image_uri = getPhotoImageUri(observation);
+    let commonName = getObservationCommonName(observation);
 
-    const [commonName, setCommonName] = useState(
-      getObservationCommonName(observation)
-    );
     return (
-      <View style={styles.rootView}>
-        <View style={styles.imageContainer} ref={viewRef}>
-          <GestureDetector gesture={composed}>
-            <Animated.Image
-              style={styleAnimated}
-              source={{
-                uri: image_uri,
-                width: widthPhoto,
-                height: heightPhoto,
-              }}
-            />
-          </GestureDetector>
+      <KeyboardAvoidingView behavior="position" style={styles.rootView}>
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+          <View style={styles.imageContainer} ref={viewRef}>
+            <GestureDetector gesture={composed}>
+              <Animated.Image
+                style={styleAnimated}
+                source={{
+                  uri: image_uri,
+                  width: widthPhoto,
+                  height: heightPhoto,
+                }}
+              />
+            </GestureDetector>
 
-          <View style={[styles.infoContainer]}>
-            <CommonNameText>{commonName}</CommonNameText>
-            <CientificNameText>{cientificName}</CientificNameText>
-            <ConservationStatusBar
-              consevationStatus={""}
-              height={18}
-              width={140}
-            />
-            <Text style={styles.infoText}>{climbingZone}</Text>
-            <Text style={styles.infoText}>{userName}</Text>
-            <Text style={styles.infoText}>{date}</Text>
+            <GestureDetector gesture={panCircleStatusBar}>
+              <View style={[styles.infoContainer]}>
+                <CommonNameText>{commonName}</CommonNameText>
+
+                <CientificNameText>{cientificName}</CientificNameText>
+                <ConservationStatusBar circlePosX={circlePosX} />
+                <Text style={styles.infoText}>{climbingZone}</Text>
+                <Text style={styles.infoText}>{userName}</Text>
+                <Text style={styles.infoText}>{date}</Text>
+              </View>
+            </GestureDetector>
           </View>
-        </View>
-
-        <TextInput
-          onChangeText={setCommonName}
-          style={styles.textInput}
-          value={commonName}
-        />
-      </View>
+        </TouchableWithoutFeedback>
+      </KeyboardAvoidingView>
     );
   }
 };

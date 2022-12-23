@@ -1,7 +1,7 @@
-import { Text, StyleSheet } from "react-native";
+import { Text, TextInput, StyleSheet } from "react-native";
 
 const CommonNameText = ({ children }) => {
-  return <Text style={styles.commonNameText}>{children}</Text>;
+  return <TextInput style={styles.commonNameText}>{children}</TextInput>;
 };
 
 export default CommonNameText;
