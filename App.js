@@ -2,6 +2,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { WildLifeCardEditScreen } from "./screens/WildLifeCardEditScreen";
+import { PopUpMenu } from "./components/PopUpMenu";
 const queryClient = new QueryClient();
 
 const Stack = createNativeStackNavigator();
@@ -17,6 +18,11 @@ export default function App() {
             contentStyle: { backgroundColor: "black" },
           }}
         >
+          <Stack.Screen
+            name="PopUpMenu"
+            component={PopUpMenu}
+            options={{ title: "PopUpMenu" }}
+          />
           <Stack.Screen
             name="WildLifeCardEditScreen"
             component={WildLifeCardEditScreen}
