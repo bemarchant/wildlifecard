@@ -25,42 +25,40 @@ const windowWidth = Dimensions.get("window").width;
 
 export const WildLifeCardEditScreen = ({ navigation }) => {
   let query1 = downLoadWildLifeData(CLIMBING_ZONE.elmanzano, KINGDOM.animalia);
+  const viewRef = useRef();
+  const shareWildLifeCard = async () => {
+    try {
+      const uri = await captureRef(viewRef, {
+        format: "png",
+        quality: 1,
+      });
+      await Share.share({ url: uri });
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerRight: () => {
+        return (
+          <View style={styles.headerIconsContainer}>
+            <ScreenHeaderButton
+              name="share-outline"
+              color="white"
+              onPress={shareWildLifeCard}
+            />
+          </View>
+        );
+      },
+    });
+  });
   if (query1.isLoading) {
     return;
   } else {
     const observation = WILD_LIFE_DATA.find((w) => w["taxaId"] === 1)["data"][
       "observations"
     ]["results"][12];
-
-    const viewRef = useRef();
-    const shareWildLifeCard = async () => {
-      try {
-        const uri = await captureRef(viewRef, {
-          format: "png",
-          quality: 1,
-        });
-        await Share.share({ url: uri });
-      } catch (err) {
-        console.error(err);
-      }
-    };
-
-    useLayoutEffect(() => {
-      navigation.setOptions({
-        headerRight: () => {
-          return (
-            <View style={styles.headerIconsContainer}>
-              <ScreenHeaderButton
-                name="share-outline"
-                color="white"
-                onPress={shareWildLifeCard}
-              />
-            </View>
-          );
-        },
-      });
-    });
 
     return (
       <KeyboardAvoidingView behavior="position" style={styles.rootView}>
