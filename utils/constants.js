@@ -27,3 +27,68 @@ export const CLIMBING_ZONE = {
     radius: 4,
   },
 };
+
+export const CONSERVATION_STATUS = {
+  DD: {
+    id: "DD",
+    name: "No evaluado",
+    color: "#ffffff",
+    borderColor: "#010007",
+  },
+
+  NE: {
+    id: "NE",
+    name: "Insuficiencia de datos",
+    color: "#9c9f9d",
+    borderColor: "#010007",
+  },
+
+  LC: {
+    id: "LC",
+    name: "Preocupación menor",
+    color: "#087465",
+    borderColor: "#ffffffff",
+  },
+
+  NT: {
+    id: "NT",
+    name: "Casi amenazada",
+    color: "#087465",
+    borderColor: "#9bcc99ff",
+  },
+
+  VU: {
+    id: "VU",
+    name: "Vulnerable",
+    color: "#e19b00",
+    borderColor: "#f7f0cdff",
+  },
+
+  EN: {
+    id: "EN",
+    name: "En peligro",
+    color: "#eb6209",
+    borderColor: "#fbc79aff",
+  },
+
+  CR: {
+    id: "CR",
+    name: "En peligro crítico",
+    color: "#e40521",
+    borderColor: "#f8caceff",
+  },
+
+  EW: {
+    id: "EW",
+    name: "Extinto en estado salvaje",
+    color: "#1a0046",
+    borderColor: "#ffffffff",
+  },
+
+  EX: {
+    id: "EW",
+    name: "Extinto",
+    color: "#010007",
+    borderColor: "#e10613ff",
+  },
+};
