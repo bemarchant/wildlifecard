@@ -1,4 +1,10 @@
-import { useRef, useLayoutEffect } from "react";
+import {
+  useRef,
+  useState,
+  useEffect,
+  useContext,
+  useLayoutEffect,
+} from "react";
 import {
   Share,
   Dimensions,
@@ -14,16 +20,19 @@ import {
   ObservationImage,
   ObservationInfoBox,
 } from "../components/wildlifecard-components";
+import { PopUpMenu } from "../components/PopUpMenu";
 import {
   CLIMBING_ZONE,
   KINGDOM,
   WILD_LIFE_DATA,
   downLoadWildLifeData,
 } from "../utils";
+import { PopMenuContext } from "../store/context/popMenu-context";
 
 const windowWidth = Dimensions.get("window").width;
 
 export const WildLifeCardEditScreen = ({ navigation }) => {
+  const popMenuCtx = useContext(PopMenuContext);
   let query1 = downLoadWildLifeData(CLIMBING_ZONE.elmanzano, KINGDOM.animalia);
   const viewRef = useRef();
   const shareWildLifeCard = async () => {
@@ -53,23 +62,48 @@ export const WildLifeCardEditScreen = ({ navigation }) => {
       },
     });
   });
+
+  const [dummyState, setDummyState] = useState(0);
+  useEffect(() => {
+    setDummyState(dummyState + 1);
+  }, [popMenuCtx.visibility]);
+
   if (query1.isLoading) {
     return;
   } else {
     const observation = WILD_LIFE_DATA.find((w) => w["taxaId"] === 1)["data"][
       "observations"
-    ]["results"][12];
-
-    return (
+    ]["results"][4];
+    console.log(
+      "WildLifeCardEditScreen : popMenuCtx.visibility : ",
+      popMenuCtx.visibility
+    );
+    if (popMenuCtx.visibility) {
+      return (
+        <KeyboardAvoidingView behavior="position" style={styles.rootView}>
+          <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+            <View>
+              <View style={styles.cardContainer} ref={viewRef}>
+                <ObservationImage observation={observation} />
+                <ObservationInfoBox observation={observation} />
+              </View>
+              <PopUpMenu popMenu={popMenuCtx.visibility} />
+            </View>
+          </TouchableWithoutFeedback>
+        </KeyboardAvoidingView>
+      );
+    } else {
       <KeyboardAvoidingView behavior="position" style={styles.rootView}>
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-          <View style={styles.cardContainer} ref={viewRef}>
-            <ObservationImage observation={observation} />
-            <ObservationInfoBox observation={observation} />
+          <View>
+            <View style={styles.cardContainer} ref={viewRef}>
+              <ObservationImage observation={observation} />
+              <ObservationInfoBox observation={observation} />
+            </View>
           </View>
         </TouchableWithoutFeedback>
-      </KeyboardAvoidingView>
-    );
+      </KeyboardAvoidingView>;
+    }
   }
 };
 

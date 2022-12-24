@@ -1,18 +1,28 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { runOnJS } from "react-native-reanimated";
 import { Gesture, GestureDetector } from "react-native-gesture-handler";
-import { Platform, Dimensions, Text, View, StyleSheet } from "react-native";
+import {
+  Platform,
+  Dimensions,
+  Text,
+  View,
+  StyleSheet,
+  Pressable,
+} from "react-native";
 import { CientificName } from "./CientificName";
 import { CommonName } from "./CommonName";
 import { ConservationStatusBar } from "./ConservationStatusBar";
 import { ClimbingZoneText } from "./ClimbingZoneText";
 import { UserName } from "./UserName";
 import { DateObservation } from "./DateObservation";
+import { PopMenuContext } from "../../store/context/popMenu-context";
 
 let windowWidth = Dimensions.get("window").width;
 let windowHeight = Dimensions.get("window").height;
 
 export const ObservationInfoBox = ({ observation }) => {
+  const popMenuCtx = useContext(PopMenuContext);
+
   const [circlePosX, setCirclePosX] = useState(0);
   const panCircleStatusBar = Gesture.Pan().onUpdate((gesture) => {
     runOnJS(setCirclePosX)(gesture.translationX);
@@ -33,9 +43,15 @@ export const ObservationInfoBox = ({ observation }) => {
       <View style={[styles.infoContainer]}>
         <View style={styles.nameContainer}>
           <CommonName>{commonName}</CommonName>
-          <View style={styles.distributionContainer}>
-            <Text style={styles.distributionText}> NAT </Text>
-          </View>
+          <Pressable
+            onPress={() => {
+              popMenuCtx.toggleVisibility(true);
+            }}
+          >
+            <View style={styles.distributionContainer}>
+              <Text style={styles.distributionText}> NAT </Text>
+            </View>
+          </Pressable>
         </View>
 
         <CientificName>{cientificName}</CientificName>
