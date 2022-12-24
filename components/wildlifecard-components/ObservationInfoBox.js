@@ -110,7 +110,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     height: 12,
     width: 26,
-    backgroundColor: "orange",
+    backgroundColor: "#f08546ff",
     paddingHorizontal: 1,
     fontSize: 8,
     color: "white",

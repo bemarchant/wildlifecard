@@ -54,7 +54,7 @@ export const WildLifeCardEditScreen = ({ navigation }) => {
           <View style={styles.headerIconsContainer}>
             <ScreenHeaderButton
               name="share-outline"
-              color="white"
+              color="gray"
               onPress={shareWildLifeCard}
             />
           </View>
@@ -66,33 +66,22 @@ export const WildLifeCardEditScreen = ({ navigation }) => {
   const [dummyState, setDummyState] = useState(0);
   useEffect(() => {
     setDummyState(dummyState + 1);
+    console.log("Inside dummyState : ", dummyState);
   }, [popMenuCtx.visibility]);
-
+  console.log("Outside dummyState : ", dummyState);
   if (query1.isLoading) {
     return;
   } else {
     const observation = WILD_LIFE_DATA.find((w) => w["taxaId"] === 1)["data"][
       "observations"
     ]["results"][4];
+
     console.log(
       "WildLifeCardEditScreen : popMenuCtx.visibility : ",
       popMenuCtx.visibility
     );
-    if (popMenuCtx.visibility) {
-      return (
-        <KeyboardAvoidingView behavior="position" style={styles.rootView}>
-          <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-            <View>
-              <View style={styles.cardContainer} ref={viewRef}>
-                <ObservationImage observation={observation} />
-                <ObservationInfoBox observation={observation} />
-              </View>
-              <PopUpMenu popMenu={popMenuCtx.visibility} />
-            </View>
-          </TouchableWithoutFeedback>
-        </KeyboardAvoidingView>
-      );
-    } else {
+
+    return (
       <KeyboardAvoidingView behavior="position" style={styles.rootView}>
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
           <View>
@@ -100,10 +89,11 @@ export const WildLifeCardEditScreen = ({ navigation }) => {
               <ObservationImage observation={observation} />
               <ObservationInfoBox observation={observation} />
             </View>
+            <PopUpMenu popMenu={true} />
           </View>
         </TouchableWithoutFeedback>
-      </KeyboardAvoidingView>;
-    }
+      </KeyboardAvoidingView>
+    );
   }
 };
 

@@ -11,12 +11,12 @@ const Stack = createNativeStackNavigator();
 export default function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <PopMenuContextProvider>
-        <NavigationContainer>
+      <NavigationContainer>
+        <PopMenuContextProvider>
           <Stack.Navigator
             screenOptions={{
-              headerStyle: { backgroundColor: "black" },
-              headerTintColor: "white",
+              headerStyle: { backgroundColor: "white" },
+              headerTintColor: "gray",
               contentStyle: { backgroundColor: "black" },
             }}
           >
@@ -25,15 +25,14 @@ export default function App() {
               component={WildLifeCardEditScreen}
               options={{ title: "Editor" }}
             />
-
             <Stack.Screen
               name="PopUpMenu"
               component={PopUpMenu}
               options={{ title: "PopUpMenu" }}
             />
           </Stack.Navigator>
-        </NavigationContainer>
-      </PopMenuContextProvider>
+        </PopMenuContextProvider>
+      </NavigationContainer>
     </QueryClientProvider>
   );
 }

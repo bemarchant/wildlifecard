@@ -1,5 +1,4 @@
 import { createContext, useState } from "react";
-import { set } from "react-native-reanimated";
 
 export const PopMenuContext = createContext({
   visibility: true,

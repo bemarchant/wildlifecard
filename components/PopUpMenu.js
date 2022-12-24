@@ -123,7 +123,8 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 4,
     elevation: 4,
-    padding: 20,
+    padding: 10,
+    width: "100%",
   },
   iconContainer: {
     width: 60,
@@ -132,17 +133,17 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     position: "absolute",
     top: -30,
-    left: windowWidth / 2 - 50,
+    left: windowWidth / 2 - 45,
   },
 
   optionMenuContainer: {
     flex: 1,
     flexDirection: "row",
-    justifyContent: "space-around",
+    justifyContent: "space-evenly",
     //backgroundColor: "red",
   },
   optionContainer: {
-    top: 15,
+    top: 30,
     padding: 10,
     backgroundColor: "blue",
     borderRadius: 20,
