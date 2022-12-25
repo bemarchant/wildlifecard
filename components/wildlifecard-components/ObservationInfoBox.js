@@ -9,6 +9,7 @@ import {
   StyleSheet,
   Pressable,
 } from "react-native";
+
 import { CientificName } from "./CientificName";
 import { CommonName } from "./CommonName";
 import { ConservationStatusBar } from "./ConservationStatusBar";
@@ -37,7 +38,7 @@ export const ObservationInfoBox = ({ observation }) => {
   let cientificName = observation["taxon"]["name"] ?? "Sin nombre científico";
   let commonName =
     observation["taxon"]["preferred_common_name"] ?? "Sin nombre común";
-
+  let userIconUrl = observation["user"]["icon_url"];
   return (
     <GestureDetector gesture={panCircleStatusBar}>
       <View style={[styles.infoContainer]}>
@@ -62,7 +63,7 @@ export const ObservationInfoBox = ({ observation }) => {
           />
         </View>
         <ClimbingZoneText>{climbingZone}</ClimbingZoneText>
-        <UserName>{userName}</UserName>
+        <UserName userIconUrl={userIconUrl}>{userName}</UserName>
         <DateObservation>{date}</DateObservation>
       </View>
     </GestureDetector>
