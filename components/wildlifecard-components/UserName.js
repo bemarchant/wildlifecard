@@ -2,19 +2,25 @@ import { View, Image, Text, StyleSheet } from "react-native";
 import UserIcon from "../icons/UserIcon";
 
 export const UserName = ({ children, userIconUrl }) => {
+  console.log("userIconUrl : ", userIconUrl);
+  const userIcon = userIconUrl ? (
+    <Image
+      style={styles.iconContainer}
+      source={{
+        uri: userIconUrl,
+        width: 14,
+        height: 14,
+      }}
+    ></Image>
+  ) : (
+    <View style={styles.iconContainer}>
+      <UserIcon />
+    </View>
+  );
+
   return (
     <View style={styles.rootView}>
-      <View style={{ justifyContent: "center" }}>
-        {/* <UserIcon /> */}
-        <Image
-          style={styles.iconContainer}
-          source={{
-            uri: userIconUrl,
-            width: 14,
-            height: 14,
-          }}
-        ></Image>
-      </View>
+      <View style={{ justifyContent: "center" }}>{userIcon}</View>
       <Text style={styles.userNameText}>{children}</Text>
     </View>
   );
@@ -32,7 +38,7 @@ const styles = StyleSheet.create({
     borderRadius: 14,
     borderWidth: 1,
     borderColor: "white",
-    backgroundColor: "red",
+    //backgroundColor: "red",
   },
 
   userNameText: {
