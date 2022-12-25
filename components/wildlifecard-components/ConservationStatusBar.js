@@ -227,7 +227,7 @@ export function ConservationStatusBar({ props, circlePosX }) {
         cx={circleX}
         fill={conservationStatus.color}
         fillOpacity={1}
-        stroke="#454545"
+        stroke={conservationStatus.borderColor}
         strokeWidth={2}
         strokeLinecap="round"
         strokeDasharray="none"
