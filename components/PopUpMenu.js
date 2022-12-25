@@ -35,6 +35,7 @@ export const PopUpMenu = ({ popMenu }) => {
 
   const dimensions = useWindowDimensions();
   const top = useSharedValue(dimensions.height);
+
   const style = useAnimatedStyle(() => {
     return {
       top: withSpring(top.value, SPRING_CONFIG),
@@ -60,6 +61,7 @@ export const PopUpMenu = ({ popMenu }) => {
     },
   });
   if (popMenu) {
+    console.log("boolean popMenu : ", popMenu);
     top.value = withSpring(dimensions.height * 0, SPRING_CONFIG);
 
     return (
@@ -105,6 +107,9 @@ export const PopUpMenu = ({ popMenu }) => {
         </PanGestureHandler>
       </View>
     );
+  } else {
+    console.log("boolean popMenu : ", popMenu);
+    top.value = withSpring(dimensions.height, SPRING_CONFIG);
   }
   return;
 };

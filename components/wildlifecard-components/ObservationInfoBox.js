@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { runOnJS } from "react-native-reanimated";
 import { Gesture, GestureDetector } from "react-native-gesture-handler";
 import {
@@ -23,6 +23,13 @@ let windowHeight = Dimensions.get("window").height;
 
 export const ObservationInfoBox = ({ observation }) => {
   const popMenuCtx = useContext(PopMenuContext);
+
+  useEffect(() => {
+    console.log(
+      "ObservationInfoBox - popMenuCtx.visibility has changed : ",
+      popMenuCtx.visibility
+    );
+  }, [popMenuCtx.visibility]);
 
   const [circlePosX, setCirclePosX] = useState(0);
   const panCircleStatusBar = Gesture.Pan().onUpdate((gesture) => {
