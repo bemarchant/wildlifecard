@@ -1,11 +1,11 @@
 import { View, Text, StyleSheet } from "react-native";
-import DateIcon from "../icons/DateIcon";
+import CalendarIcon from "../icons/CalendarIcon";
 
 export const DateObservation = ({ children }) => {
   return (
     <View style={styles.rootView}>
       <View style={styles.iconContainer}>
-        <DateIcon />
+        <CalendarIcon />
       </View>
       <Text style={styles.dateObservationText}>{children}</Text>
     </View>
