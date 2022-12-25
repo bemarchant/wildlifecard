@@ -52,7 +52,7 @@ export const PopUpMenu = ({ options, popMenu }) => {
     onEnd() {
       if (top.value > dimensions.height * 0 + 5) {
         top.value = dimensions.height;
-        runOnJS(popMenuCtx.toggleVisibility)(false);
+        runOnJS(popMenuCtx.setVisibility)(false);
       } else {
         top.value = dimensions.height * 0;
       }
@@ -71,11 +71,13 @@ export const PopUpMenu = ({ options, popMenu }) => {
               {Object.keys(options).map((key) => {
                 return (
                   <Pressable
+                    key={options[key].id}
                     onPress={() => {
+                      console.log("PopUpMenu, key : ", key);
+                      console.log("PopUpMenu, options[key] : ", options[key]);
                       popMenuCtx.setSelectedOption(options[key]);
-                      console.log("options[key] : ", options[key]);
                       console.log(
-                        "popMenuCtx.selectedOption : ",
+                        "PopUpMenu, popMenuCtx.selectedOption : ",
                         popMenuCtx.selectedOption
                       );
                     }}
@@ -97,7 +99,6 @@ export const PopUpMenu = ({ options, popMenu }) => {
       </View>
     );
   } else {
-    console.log("boolean popMenu : ", popMenu);
     top.value = withSpring(dimensions.height, SPRING_CONFIG);
   }
   return;

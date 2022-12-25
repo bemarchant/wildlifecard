@@ -29,7 +29,6 @@ const windowWidth = Dimensions.get("window").width;
 
 export const WildLifeCardEditScreen = ({ navigation }) => {
   const popMenuCtx = useContext(PopMenuContext);
-  popMenuCtx.setOptions(DISTRIBUTIONS);
 
   let query1 = downLoadWildLifeData(CLIMBING_ZONE.elmanzano, KINGDOM.animalia);
   const viewRef = useRef();
@@ -78,7 +77,7 @@ export const WildLifeCardEditScreen = ({ navigation }) => {
               <INatCLIcon style={styles.iNatIconContainer} />
             </View>
             <PopUpMenu
-              options={DISTRIBUTIONS}
+              options={popMenuCtx.options}
               popMenu={popMenuCtx.visibility}
             />
           </View>
