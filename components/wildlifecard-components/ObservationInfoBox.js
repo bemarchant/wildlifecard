@@ -24,12 +24,7 @@ let windowHeight = Dimensions.get("window").height;
 export const ObservationInfoBox = ({ observation }) => {
   const popMenuCtx = useContext(PopMenuContext);
 
-  useEffect(() => {
-    console.log(
-      "ObservationInfoBox - popMenuCtx.visibility has changed : ",
-      popMenuCtx.visibility
-    );
-  }, [popMenuCtx.visibility]);
+  useEffect(() => {}, [popMenuCtx.visibility]);
 
   const [circlePosX, setCirclePosX] = useState(0);
   const panCircleStatusBar = Gesture.Pan().onUpdate((gesture) => {

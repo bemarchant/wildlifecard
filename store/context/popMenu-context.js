@@ -3,16 +3,17 @@ import { createContext, useState } from "react";
 export const PopMenuContext = createContext({
   visibility: true,
   toggleVisibility: () => {},
+  options: [],
+  selectedOption: Object,
 });
 
 const PopMenuContextProvider = ({ children }) => {
-  let visibility = true;
+  const [visibility, setVisibility] = useState(true);
 
   const value = {
     visibility: visibility,
     toggleVisibility: (isVisible) => {
-      visibility = isVisible;
-      console.log("visibility : ", visibility);
+      setVisibility(isVisible);
     },
   };
 

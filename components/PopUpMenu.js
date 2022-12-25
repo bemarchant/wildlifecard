@@ -61,7 +61,6 @@ export const PopUpMenu = ({ popMenu }) => {
     },
   });
   if (popMenu) {
-    console.log("boolean popMenu : ", popMenu);
     top.value = withSpring(dimensions.height * 0, SPRING_CONFIG);
 
     return (

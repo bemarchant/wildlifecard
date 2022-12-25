@@ -28,6 +28,7 @@ import {
   downLoadWildLifeData,
 } from "../utils";
 import { PopMenuContext } from "../store/context/popMenu-context";
+import INatCLIcon from "../components/icons/INatCLIcon";
 
 const windowWidth = Dimensions.get("window").width;
 
@@ -63,23 +64,12 @@ export const WildLifeCardEditScreen = ({ navigation }) => {
     });
   });
 
-  const [dummyState, setDummyState] = useState(0);
-  useEffect(() => {
-    setDummyState(dummyState + 1);
-    console.log("Inside dummyState : ", dummyState);
-  }, [popMenuCtx.visibility]);
-  console.log("Outside dummyState : ", dummyState);
   if (query1.isLoading) {
     return;
   } else {
     const observation = WILD_LIFE_DATA.find((w) => w["taxaId"] === 1)["data"][
       "observations"
-    ]["results"][4];
-
-    console.log(
-      "WildLifeCardEditScreen : popMenuCtx.visibility : ",
-      popMenuCtx.visibility
-    );
+    ]["results"][20];
 
     return (
       <KeyboardAvoidingView behavior="position" style={styles.rootView}>
@@ -88,8 +78,9 @@ export const WildLifeCardEditScreen = ({ navigation }) => {
             <View style={styles.cardContainer} ref={viewRef}>
               <ObservationImage observation={observation} />
               <ObservationInfoBox observation={observation} />
+              <INatCLIcon style={styles.iNatIconContainer} />
             </View>
-            <PopUpMenu popMenu={true} />
+            <PopUpMenu popMenu={popMenuCtx.visibility} />
           </View>
         </TouchableWithoutFeedback>
       </KeyboardAvoidingView>
@@ -110,5 +101,12 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     height: windowWidth * 1.6,
     width: windowWidth * 0.9,
+  },
+  iNatIconContainer: {
+    position: "absolute",
+    //backgroundColor: "red",
+    right: 20,
+    bottom: 30,
+    opacity: 0.4,
   },
 });

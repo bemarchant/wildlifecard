@@ -2,7 +2,6 @@ import { View, Image, Text, StyleSheet } from "react-native";
 import UserIcon from "../icons/UserIcon";
 
 export const UserName = ({ children, userIconUrl }) => {
-  console.log("userIconUrl : ", userIconUrl);
   const userIcon = userIconUrl ? (
     <Image
       style={styles.iconContainer}
