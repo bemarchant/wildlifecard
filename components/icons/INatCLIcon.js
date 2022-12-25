@@ -4,8 +4,8 @@ import Svg, { Path } from "react-native-svg";
 function INatCLIcon(props) {
   return (
     <Svg
-      width={60}
-      height={60}
+      width={40}
+      height={40}
       viewBox="0 0 26.458333 26.458333"
       xmlns="http://www.w3.org/2000/svg"
       {...props}
