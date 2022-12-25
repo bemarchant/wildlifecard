@@ -17,6 +17,7 @@ import { ClimbingZoneText } from "./ClimbingZoneText";
 import { UserName } from "./UserName";
 import { DateObservation } from "./DateObservation";
 import { PopMenuContext } from "../../store/context/popMenu-context";
+import { DISTRIBUTIONS } from "../../utils";
 
 let windowWidth = Dimensions.get("window").width;
 let windowHeight = Dimensions.get("window").height;
@@ -24,7 +25,9 @@ let windowHeight = Dimensions.get("window").height;
 export const ObservationInfoBox = ({ observation }) => {
   const popMenuCtx = useContext(PopMenuContext);
 
-  useEffect(() => {}, [popMenuCtx.visibility]);
+  console.log(popMenuCtx.selectedOption);
+
+  useEffect(() => {}, [popMenuCtx.visibility, popMenuCtx.selectedOption]);
 
   const [circlePosX, setCirclePosX] = useState(0);
   const panCircleStatusBar = Gesture.Pan().onUpdate((gesture) => {
@@ -49,10 +52,21 @@ export const ObservationInfoBox = ({ observation }) => {
           <Pressable
             onPress={() => {
               popMenuCtx.toggleVisibility(true);
+              popMenuCtx.setOptions(DISTRIBUTIONS);
             }}
           >
-            <View style={styles.distributionContainer}>
-              <Text style={styles.distributionText}> NAT </Text>
+            <View
+              style={[
+                styles.distributionContainer,
+                {
+                  borderColor: popMenuCtx.selectedOption.borderColor,
+                  backgroundColor: popMenuCtx.selectedOption.color,
+                },
+              ]}
+            >
+              <Text style={[styles.distributionText]}>
+                {popMenuCtx.selectedOption.shortName}
+              </Text>
             </View>
           </Pressable>
         </View>
@@ -99,25 +113,28 @@ const styles = StyleSheet.create({
     //backgroundColor: "green",
   },
   distributionContainer: {
+    alignItems: "center",
+    justifyContent: "center",
+
+    //backgroundColor: "green",
+
     elevation: 4,
     shadowColor: "black",
     shadowOpacity: 0.4,
     shadowOffset: { width: 2, height: 2 },
     shadowRadius: 4,
     overflow: Platform.OS === "android" ? "hidden" : "visible",
+    width: 30,
+    height: 12,
+    borderWidth: 1,
+    borderRadius: 5,
   },
 
   distributionText: {
-    borderColor: "#ffffff",
-    borderWidth: 1,
-    borderRadius: 5,
-    height: 12,
-    width: 26,
-    backgroundColor: "#f08546ff",
-    paddingHorizontal: 1,
     fontSize: 8,
     color: "white",
     fontWeight: "bold",
     overflow: "hidden",
+    //backgroundColor: "red",
   },
 });

@@ -28,6 +28,39 @@ export const CLIMBING_ZONE = {
   },
 };
 
+export const DISTRIBUTIONS = {
+  MICRO_ENDEMIC: {
+    id: 0,
+    name: "Micro",
+    shortName: "MIC",
+    color: "#78aa1fff",
+    borderColor: "#e5f6c4ff",
+  },
+  ENDEMIC: {
+    id: 1,
+    name: "Endémica",
+    shortName: "END",
+    color: "#78aa1fff",
+    borderColor: "#e5f6c4ff",
+  },
+
+  NATIVE: {
+    id: 2,
+    name: "Nativa",
+    shortName: "NAT",
+    color: "#f08546ff",
+    borderColor: "#f0e0d6ff",
+  },
+
+  EXOTIC: {
+    id: 3,
+    name: "Introducida",
+    shortName: "INT",
+    color: "#df1b7cff",
+    borderColor: "#f5dfebff",
+  },
+};
+
 export const CONSERVATION_STATUS = {
   NE: {
     id: "NE",

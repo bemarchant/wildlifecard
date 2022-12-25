@@ -1,10 +1,4 @@
-import {
-  useRef,
-  useState,
-  useEffect,
-  useContext,
-  useLayoutEffect,
-} from "react";
+import { useRef, useContext, useLayoutEffect } from "react";
 import {
   Share,
   Dimensions,
@@ -25,6 +19,7 @@ import {
   CLIMBING_ZONE,
   KINGDOM,
   WILD_LIFE_DATA,
+  DISTRIBUTIONS,
   downLoadWildLifeData,
 } from "../utils";
 import { PopMenuContext } from "../store/context/popMenu-context";
@@ -34,6 +29,8 @@ const windowWidth = Dimensions.get("window").width;
 
 export const WildLifeCardEditScreen = ({ navigation }) => {
   const popMenuCtx = useContext(PopMenuContext);
+  popMenuCtx.setOptions(DISTRIBUTIONS);
+
   let query1 = downLoadWildLifeData(CLIMBING_ZONE.elmanzano, KINGDOM.animalia);
   const viewRef = useRef();
   const shareWildLifeCard = async () => {
@@ -80,7 +77,10 @@ export const WildLifeCardEditScreen = ({ navigation }) => {
               <ObservationInfoBox observation={observation} />
               <INatCLIcon style={styles.iNatIconContainer} />
             </View>
-            <PopUpMenu popMenu={popMenuCtx.visibility} />
+            <PopUpMenu
+              options={DISTRIBUTIONS}
+              popMenu={popMenuCtx.visibility}
+            />
           </View>
         </TouchableWithoutFeedback>
       </KeyboardAvoidingView>

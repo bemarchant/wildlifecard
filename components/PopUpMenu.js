@@ -6,17 +6,15 @@ import Animated, {
   runOnJS,
 } from "react-native-reanimated";
 import {
-  Modal,
   View,
   Text,
   StyleSheet,
   useWindowDimensions,
-  Button,
   Pressable,
   Dimensions,
 } from "react-native";
 import { PanGestureHandler } from "react-native-gesture-handler";
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext } from "react";
 import { PopMenuContext } from "../store/context/popMenu-context";
 import DistributionIcon from "./icons/DistributionIcon";
 
@@ -30,7 +28,7 @@ const SPRING_CONFIG = {
 
 let windowWidth = Dimensions.get("window").width;
 
-export const PopUpMenu = ({ popMenu }) => {
+export const PopUpMenu = ({ options, popMenu }) => {
   const popMenuCtx = useContext(PopMenuContext);
 
   const dimensions = useWindowDimensions();
@@ -62,7 +60,6 @@ export const PopUpMenu = ({ popMenu }) => {
   });
   if (popMenu) {
     top.value = withSpring(dimensions.height * 0, SPRING_CONFIG);
-
     return (
       <View style={{ flex: 1 }}>
         <PanGestureHandler onGestureEvent={gestureHandler}>
@@ -71,36 +68,29 @@ export const PopUpMenu = ({ popMenu }) => {
               <DistributionIcon></DistributionIcon>
             </View>
             <View style={styles.optionMenuContainer}>
-              <Pressable>
-                <View
-                  style={[
-                    styles.optionContainer,
-                    { backgroundColor: "#df1b7cff" },
-                  ]}
-                >
-                  <Text style={styles.optionText}>Introducida</Text>
-                </View>
-              </Pressable>
-              <Pressable>
-                <View
-                  style={[
-                    styles.optionContainer,
-                    { backgroundColor: "#f08546ff" },
-                  ]}
-                >
-                  <Text style={styles.optionText}>Nativa</Text>
-                </View>
-              </Pressable>
-              <Pressable>
-                <View
-                  style={[
-                    styles.optionContainer,
-                    { backgroundColor: "#78aa1fff" },
-                  ]}
-                >
-                  <Text style={styles.optionText}>Endémica</Text>
-                </View>
-              </Pressable>
+              {Object.keys(options).map((key) => {
+                return (
+                  <Pressable
+                    onPress={() => {
+                      popMenuCtx.setSelectedOption(options[key]);
+                      console.log("options[key] : ", options[key]);
+                      console.log(
+                        "popMenuCtx.selectedOption : ",
+                        popMenuCtx.selectedOption
+                      );
+                    }}
+                  >
+                    <View
+                      style={[
+                        styles.optionContainer,
+                        { backgroundColor: options[key].color },
+                      ]}
+                    >
+                      <Text style={styles.optionText}>{options[key].name}</Text>
+                    </View>
+                  </Pressable>
+                );
+              })}
             </View>
           </Animated.View>
         </PanGestureHandler>
