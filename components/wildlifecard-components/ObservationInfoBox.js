@@ -17,6 +17,7 @@ import { ClimbingZoneText } from "./ClimbingZoneText";
 import { UserName } from "./UserName";
 import { DateObservation } from "./DateObservation";
 import { PopMenuContext } from "../../store/context/popMenu-context";
+import INatCLIcon from "../icons/INatCLIcon";
 
 let windowWidth = Dimensions.get("window").width;
 let windowHeight = Dimensions.get("window").height;
@@ -65,6 +66,8 @@ export const ObservationInfoBox = ({ observation }) => {
         <ClimbingZoneText>{climbingZone}</ClimbingZoneText>
         <UserName userIconUrl={userIconUrl}>{userName}</UserName>
         <DateObservation>{date}</DateObservation>
+
+        <INatCLIcon style={styles.iNatIconContainer} />
       </View>
     </GestureDetector>
   );
@@ -117,5 +120,13 @@ const styles = StyleSheet.create({
     color: "white",
     fontWeight: "bold",
     overflow: "hidden",
+  },
+
+  iNatIconContainer: {
+    position: "absolute",
+    //backgroundColor: "red",
+    right: -35,
+    bottom: -28,
+    opacity: 0.4,
   },
 });
