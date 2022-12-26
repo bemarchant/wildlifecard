@@ -38,17 +38,18 @@ export const ObservationInfoBox = ({ observation }) => {
   const panCircleStatusBar = Gesture.Pan().onUpdate((gesture) => {
     runOnJS(setCirclePosX)(gesture.translationX);
   });
-
-  let day = observation["observed_on_details"]["day"] ?? "??";
-  let month = observation["observed_on_details"]["month"] ?? "??";
-  let year = observation["observed_on_details"]["year"] ?? "????";
+  console.log(observation);
+  let day = observation?.["observed_on_details"]?.["day"] ?? "??";
+  let month = observation?.["observed_on_details"]?.["month"] ?? "??";
+  let year = observation?.["observed_on_details"]?.["year"] ?? "????";
   let date = day + "/" + month + "/" + year;
-  let userName = observation["user"]["name"] ?? "Usuario desconocido";
+  let userName = observation?.["user"]?.["name"] ?? "Usuario desconocido";
   let climbingZone = "El Manzano" ?? "Desconocido";
-  let cientificName = observation["taxon"]["name"] ?? "Sin nombre científico";
+  let cientificName =
+    observation?.["taxon"]?.["name"] ?? "Sin nombre científico";
   let commonName =
-    observation["taxon"]["preferred_common_name"] ?? "Sin nombre común";
-  let userIconUrl = observation["user"]["icon_url"];
+    observation?.["taxon"]?.["preferred_common_name"] ?? "Sin nombre común";
+  let userIconUrl = observation?.["user"]?.["icon_url"];
   return (
     <GestureDetector gesture={panCircleStatusBar}>
       <View style={[styles.infoContainer]}>
