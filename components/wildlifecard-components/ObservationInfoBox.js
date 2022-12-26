@@ -25,20 +25,12 @@ let windowHeight = Dimensions.get("window").height;
 export const ObservationInfoBox = ({ observation }) => {
   const popMenuCtx = useContext(PopMenuContext);
 
-  useEffect(() => {
-    console.log(
-      "ObservationInfoBox, useEffect : popMenuCtx.selectedOption",
-      popMenuCtx.selectedOption
-    );
-  }, [popMenuCtx.selectedOption]);
-
-  useEffect(() => {}, [popMenuCtx.visibility]);
+  useEffect(() => {}, [popMenuCtx.visibility], [popMenuCtx.selectedOption]);
 
   const [circlePosX, setCirclePosX] = useState(0);
   const panCircleStatusBar = Gesture.Pan().onUpdate((gesture) => {
     runOnJS(setCirclePosX)(gesture.translationX);
   });
-  console.log(observation);
   let day = observation?.["observed_on_details"]?.["day"] ?? "??";
   let month = observation?.["observed_on_details"]?.["month"] ?? "??";
   let year = observation?.["observed_on_details"]?.["year"] ?? "????";

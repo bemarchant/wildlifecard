@@ -73,13 +73,7 @@ export const PopUpMenu = ({ options, popMenu }) => {
                   <Pressable
                     key={options[key].id}
                     onPress={() => {
-                      console.log("PopUpMenu, key : ", key);
-                      console.log("PopUpMenu, options[key] : ", options[key]);
                       popMenuCtx.setSelectedOption(options[key]);
-                      console.log(
-                        "PopUpMenu, popMenuCtx.selectedOption : ",
-                        popMenuCtx.selectedOption
-                      );
                     }}
                   >
                     <View

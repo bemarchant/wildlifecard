@@ -65,7 +65,7 @@ export const WildLifeCardEditScreen = ({ navigation }) => {
   } else {
     const observation = WILD_LIFE_DATA.find((w) => w["taxaId"] === 1)["data"][
       "observations"
-    ]["results"][20];
+    ]["results"][1];
 
     return (
       <KeyboardAvoidingView behavior="position" style={styles.rootView}>
